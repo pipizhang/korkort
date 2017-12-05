@@ -4,9 +4,7 @@ import:
 - package: github.com/urfave/cli
   version: 1.20.0
 - package: github.com/PuerkitoBio/goquery
-  version: 1.1.0
 - package: github.com/mattn/go-sqlite3
-  version: 1.4.0
-- package: github.com/go-xorm/xorm
-  version: 0.5.6
 - package: github.com/Unknwon/goconfig
+- package: github.com/jinzhu/gorm
+- package: github.com/jinzhu/inflection
