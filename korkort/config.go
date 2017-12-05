@@ -6,12 +6,10 @@ import (
 	"os"
 )
 
-const (
+var (
 	_CFG_PATH        = "conf/app.ini"
 	_CFG_CUSTOM_PATH = "conf/custom.ini"
-)
 
-var (
 	Cfg *goconfig.ConfigFile
 )
 
