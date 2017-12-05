@@ -18,5 +18,4 @@ func TestInitConfig(t *testing.T) {
 	if dbFile != "data/main.db" {
 		t.Error("Expected app.database == 'data/main.db'")
 	}
-
 }
