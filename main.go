@@ -8,7 +8,7 @@ import (
 
 const (
 	APP_NAME    = "KORKORT"
-	APP_VERSION = "0.1"
+	APP_VERSION = "1.0"
 )
 
 func main() {
@@ -18,27 +18,16 @@ func main() {
 	app.Usage = ""
 	app.Version = APP_VERSION
 
-	flagConfig := cli.StringFlag{
-		Name:  "config, c",
-		Usage: "Load configuratin file from `FILE`",
-	}
-
 	app.Commands = []cli.Command{
 		{
 			Name:   "setup",
-			Usage:  "Initialize Application",
+			Usage:  "Initialize database",
 			Action: korkort.Setup,
-			Flags: []cli.Flag{
-				flagConfig,
-			},
 		},
 		{
 			Name:   "scrape",
 			Usage:  "Scrape data",
 			Action: korkort.Scrape,
-			Flags: []cli.Flag{
-				flagConfig,
-			},
 		},
 	}
 
