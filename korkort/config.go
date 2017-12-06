@@ -3,7 +3,6 @@ package korkort
 import (
 	"github.com/Unknwon/goconfig"
 	"log"
-	"os"
 )
 
 var (
@@ -21,9 +20,7 @@ func InitConfig() {
 		log.Fatalf("Fail to load config file(%s): %v", _CFG_PATH, err)
 	}
 
-	var f os.FileInfo
-	f, err = os.Stat(_CFG_CUSTOM_PATH)
-	if err == nil && !f.IsDir() {
+	if IsFile(_CFG_CUSTOM_PATH) {
 		if err = Cfg.AppendFiles(_CFG_CUSTOM_PATH); err != nil {
 			log.Fatalf("Fail to load config file(%s): %v", _CFG_CUSTOM_PATH, err)
 		}
