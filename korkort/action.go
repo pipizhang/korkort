@@ -1,6 +1,7 @@
 package korkort
 
 import (
+	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly"
 	"github.com/urfave/cli"
@@ -43,7 +44,9 @@ func Scrape(c *cli.Context) {
 	}
 
 	b.OnHTML("div.provyta > div:not([class])", func(e *colly.HTMLElement) {
-		log.Println("--------------------------------")
+		fmt.Println("--------------------------------")
+
+		iq := IQuestion{}
 
 		// Convert image url to absolute url
 		e.DOM.Find("img").Each(func(i int, s *goquery.Selection) {
@@ -53,25 +56,30 @@ func Scrape(c *cli.Context) {
 		})
 
 		title := e.ChildText("p.fraga")
-		log.Println(title)
+		iq.ParseContent(title)
 
 		e.DOM.Find("label").Each(func(i int, s *goquery.Selection) {
 			option := s.Text()
-			log.Println(i, ": ", option)
+			iq.AddChoice(option)
 		})
 
 		explanation, _ := e.DOM.Find("div.forklaringsruta").Html()
-		log.Printf("explanation: %s\n", explanation)
+		iq.ParseExplanation(explanation)
 
 		info := e.ChildText("div.navlinks")
-		log.Printf("info: %s\n", info)
+		iq.ParseOrignalID(info)
+		iq.ParseCategory(info)
 
 		imgSrc := e.ChildAttr("div.img img", "src")
 		var imgURL string = ""
 		if imgSrc != "" {
 			imgURL = e.Request.AbsoluteURL(imgSrc)
-			log.Println("image: >>> " + imgURL)
+			//log.Println("image: >>> " + imgURL)
+			iq.AddImage(imgURL)
 		}
+
+		fmt.Println(iq)
+		iq.Save()
 
 	})
 
@@ -79,7 +87,6 @@ func Scrape(c *cli.Context) {
 		url := e.Attr("href")
 		matched, _ := regexp.MatchString(`\/inloggad\/statistik/\w+\/$`, url)
 		if matched {
-			log.Println("======> ", url)
 			time.Sleep(time.Second * 5)
 			e.Request.Visit(url)
 		}

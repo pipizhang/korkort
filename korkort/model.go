@@ -4,6 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"log"
+	"time"
 )
 
 func GetDB() *gorm.DB {
@@ -20,16 +21,22 @@ func GetDB() *gorm.DB {
 }
 
 type Question struct {
-	gorm.Model
-	OriginalID  int    `gorm:"unique"`
+	ID          int
 	Content     string `gorm:"type:text"`
-	image       string
 	Explanation string `gorm:"type:text"`
+	Image       string
+	OriginalID  int `gorm:"unique"`
+	Category    string
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	Choices     []Choice
 }
 
 type Choice struct {
-	gorm.Model
-	QuestionOriginalID int
-	Content            string `gorm:"type:text"`
-	Status             bool
+	ID         int
+	QuestionID int
+	Content    string `gorm:"type:text"`
+	Status     int
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
 }
