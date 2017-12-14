@@ -1,0 +1,11 @@
+language: go
+sudo: false
+go:
+  - 1.9.x
+  - master
+before_install:
+  - go get github.com/Masterminds/glide
+install:
+  - glide install -v
+script:
+  - go test -v -race ./...
