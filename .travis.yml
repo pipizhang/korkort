@@ -8,3 +8,7 @@ install:
   - glide install -v
 script:
   - go test -v -race ./...
+branches:
+  only:
+  - master
+
