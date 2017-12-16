@@ -27,3 +27,10 @@ compile
 ```bash
 bash build.sh
 ```
+
+## Docker
+How to build a local development environment using docker?
+```bash
+make docker-build
+make docker-run
+```
